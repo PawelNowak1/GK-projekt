@@ -19,15 +19,12 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float horizontalInput = Input.GetAxisRaw("Horizontal");
+        move();
+        checkGround();
+    }
 
-        if (Input.GetKeyDown(KeyCode.Space) && grounded == true)
-        {
-            rigidBody.velocity = new Vector2(rigidBody.velocity.x, jumpForce);
-            grounded = false;
-            resetJump = true;
-            StartCoroutine(ResetJumpRoutine());
-        }
+    void checkGround()
+    {
         RaycastHit2D hitInfo = Physics2D.Raycast(transform.position, Vector2.down, 1f, 1 << 8);
         Debug.DrawRay(transform.position, 1f * Vector2.down, Color.green);
 
@@ -36,10 +33,21 @@ public class Player : MonoBehaviour
             if (resetJump == false)
                 grounded = true;
         }
-
-        rigidBody.velocity = new Vector2(horizontalInput, rigidBody.velocity.y);
     }
 
+    void move()
+    {
+        float horizontalInput = Input.GetAxisRaw("Horizontal");
+        if (Input.GetKeyDown(KeyCode.Space) && grounded == true)
+        {
+            rigidBody.velocity = new Vector2(rigidBody.velocity.x, jumpForce);
+            grounded = false;
+            resetJump = true;
+            StartCoroutine(ResetJumpRoutine());
+        }
+        rigidBody.velocity = new Vector2(horizontalInput, rigidBody.velocity.y);
+
+    }
     IEnumerator ResetJumpRoutine()
     {
         yield return new WaitForSeconds(0.2f);
