@@ -2262,6 +2262,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02606f5b5c2bb584b9a1b33efced4538, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  jumpForce: 5
+  grounded: 0
 --- !u!4 &1062262259
 Transform:
   m_ObjectHideFlags: 0
@@ -2972,7 +2974,7 @@ GameObject:
   - component: {fileID: 1755328292}
   - component: {fileID: 1755328291}
   - component: {fileID: 1755328290}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Ground_Tilemap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
