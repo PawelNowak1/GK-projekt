@@ -5,11 +5,10 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     private Rigidbody2D rigidBody;
-    [SerializeField]
-    private float jumpForce = 5.0f;
-    [SerializeField]
+    private float jumpForce = 7.0f;
     private bool grounded = false;
     private bool resetJump = false;
+    private float speed = 3.5f;
     // Start is called before the first frame update
     void Start()
     {
@@ -38,6 +37,8 @@ public class Player : MonoBehaviour
     void move()
     {
         float horizontalInput = Input.GetAxisRaw("Horizontal");
+        rigidBody.velocity = new Vector2(horizontalInput * speed, rigidBody.velocity.y);
+
         if (Input.GetKeyDown(KeyCode.Space) && grounded == true)
         {
             rigidBody.velocity = new Vector2(rigidBody.velocity.x, jumpForce);
@@ -45,7 +46,6 @@ public class Player : MonoBehaviour
             resetJump = true;
             StartCoroutine(ResetJumpRoutine());
         }
-        rigidBody.velocity = new Vector2(horizontalInput, rigidBody.velocity.y);
 
     }
     IEnumerator ResetJumpRoutine()
