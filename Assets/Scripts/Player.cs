@@ -9,10 +9,14 @@ public class Player : MonoBehaviour
     private bool grounded = false;
     private bool resetJump = false;
     private float speed = 3.5f;
+    private PlayerAnim playerAnim;
+    private SpriteRenderer playerSprite;
     // Start is called before the first frame update
     void Start()
     {
         rigidBody = GetComponent<Rigidbody2D>();
+        playerAnim = GetComponent<PlayerAnim>();
+        playerSprite = GetComponentInChildren<SpriteRenderer>();
     }
 
     // Update is called once per frame
@@ -20,6 +24,11 @@ public class Player : MonoBehaviour
     {
         move();
         checkGround();
+
+        if (Input.GetMouseButtonDown(0) && grounded == true)
+        {
+            playerAnim.Attack();
+        }
     }
 
     void checkGround()
@@ -30,14 +39,26 @@ public class Player : MonoBehaviour
         if (hitInfo.collider != null)
         {
             if (resetJump == false)
+            {
+                playerAnim.Jump(false);
                 grounded = true;
+            }
         }
     }
 
     void move()
     {
         float horizontalInput = Input.GetAxisRaw("Horizontal");
-        rigidBody.velocity = new Vector2(horizontalInput * speed, rigidBody.velocity.y);
+
+        if (horizontalInput > 0)
+        {
+            playerSprite.flipX = false;
+
+        }
+        else if (horizontalInput < 0)
+        {
+            playerSprite.flipX = true;
+        }
 
         if (Input.GetKeyDown(KeyCode.Space) && grounded == true)
         {
@@ -45,8 +66,11 @@ public class Player : MonoBehaviour
             grounded = false;
             resetJump = true;
             StartCoroutine(ResetJumpRoutine());
+            playerAnim.Jump(true);
         }
 
+        rigidBody.velocity = new Vector2(horizontalInput * speed, rigidBody.velocity.y);
+        playerAnim.Move(horizontalInput);
     }
     IEnumerator ResetJumpRoutine()
     {
