@@ -5,11 +5,15 @@ using UnityEngine.SceneManagement;
 
 public class Finish : MonoBehaviour
 {
+    public GameObject finishUI;
+    public GameManager gameManager;
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         if(other.tag == "Player")
         {
-            SceneManager.LoadScene("StartGame");
+            gameManager.FinishMap();
+            finishUI.SetActive(true);
         }
     }
 }
