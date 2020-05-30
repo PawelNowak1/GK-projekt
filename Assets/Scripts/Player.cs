@@ -33,8 +33,8 @@ public class Player : MonoBehaviour
 
     void checkGround()
     {
-        RaycastHit2D hitInfo = Physics2D.Raycast(transform.position, Vector2.down, 1f, 1 << 8);
-        Debug.DrawRay(transform.position, 1f * Vector2.down, Color.green);
+        RaycastHit2D hitInfo = Physics2D.Raycast(transform.position, Vector2.down, 1.25f, 1 << 8);
+        Debug.DrawRay(transform.position, 1.25f * Vector2.down, Color.green);
 
         if (hitInfo.collider != null)
         {
