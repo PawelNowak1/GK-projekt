@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, IDamageable
 {
     private Rigidbody2D rigidBody;
     private float jumpForce = 8.0f;
@@ -11,6 +11,9 @@ public class Player : MonoBehaviour
     private float speed = 3.5f;
     private PlayerAnim playerAnim;
     private SpriteRenderer playerSprite;
+
+
+    public int Health { get; set; }
     // Start is called before the first frame update
     void Start()
     {
@@ -76,5 +79,10 @@ public class Player : MonoBehaviour
     {
         yield return new WaitForSeconds(0.2f);
         resetJump = false;
+    }
+
+    public void Damage()
+    {
+        Debug.Log("Player Damage");
     }
 }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerAttack : MonoBehaviour
+public class Attack : MonoBehaviour
 {
     private bool canDamage = true;
     private void OnTriggerEnter2D(Collider2D other)

@@ -9,9 +9,11 @@ public class Rogue06 : Enemy, IDamageable
     private SpriteRenderer[] sprites;
 
     protected bool isHit = false;
+    protected Player player;
+
     public override void Update()
     {
-        if (anim.GetCurrentAnimatorStateInfo(0).IsName("Rogue_idle_01"))
+        if (anim.GetCurrentAnimatorStateInfo(0).IsName("Rogue_idle_01") && anim.GetBool("InCombat") == false)
         {
             return;
         }
@@ -50,12 +52,32 @@ public class Rogue06 : Enemy, IDamageable
             transform.position = Vector3.MoveTowards(transform.position, currentTarget, speed * Time.deltaTime);
         }
 
+        float distance = Vector3.Distance(transform.localPosition, player.transform.localPosition);
+        if (distance > 2.0f)
+        {
+            isHit = false;
+            anim.SetBool("InCombat", false);
+        }
+
+        Vector3 direction = player.transform.localPosition - transform.localPosition;
+
+        if (direction.x > 0 && anim.GetBool("InCombat") == true)
+        {
+            //sprite.flipX = false;
+            transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, 0, transform.rotation.eulerAngles.z);
+        }
+        else if (direction.x < 0 && anim.GetBool("InCombat") == true)
+        {
+            //sprite.flipX = true;
+            transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, 180, transform.rotation.eulerAngles.z);
+        }
     }
 
     private void Start()
     {
         anim = GetComponentInChildren<Animator>();
         sprites = GetComponentsInChildren<SpriteRenderer>();
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         Health = base.health;
     }
 
