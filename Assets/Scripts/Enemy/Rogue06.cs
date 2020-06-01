@@ -2,18 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Rogue06 : Enemy
+public class Rogue06 : Enemy, IDamageable
 {
     private Vector3 currentTarget;
     private Animator anim;
     private SpriteRenderer[] sprites;
 
-    private void Start()
-    {
-        anim = GetComponentInChildren<Animator>();
-        sprites = GetComponentsInChildren<SpriteRenderer>();
-    }
-
+    protected bool isHit = false;
     public override void Update()
     {
         if (anim.GetCurrentAnimatorStateInfo(0).IsName("Rogue_idle_01"))
@@ -49,7 +44,33 @@ public class Rogue06 : Enemy
             currentTarget = pointA.position;
             anim.SetTrigger("Idle");
         }
-        transform.position = Vector3.MoveTowards(transform.position, currentTarget, speed * Time.deltaTime);
 
+        if (isHit == false)
+        {
+            transform.position = Vector3.MoveTowards(transform.position, currentTarget, speed * Time.deltaTime);
+        }
+
+    }
+
+    private void Start()
+    {
+        anim = GetComponentInChildren<Animator>();
+        sprites = GetComponentsInChildren<SpriteRenderer>();
+        Health = base.health;
+    }
+
+    public int Health { get; set; }
+
+    public void Damage()
+    {
+        isHit = true;
+        anim.SetBool("InCombat", true);
+        Debug.Log("Damage");
+        Health--;
+        anim.SetTrigger("Hit");
+        if (Health < 1)
+        {
+            Destroy(this.gameObject);
+        }
     }
 }
