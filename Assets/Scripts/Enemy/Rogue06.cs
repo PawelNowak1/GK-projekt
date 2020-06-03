@@ -9,6 +9,7 @@ public class Rogue06 : Enemy, IDamageable
     private SpriteRenderer[] sprites;
 
     protected bool isHit = false;
+    protected bool isDead = false;
     protected Player player;
 
     public override void Update()
@@ -18,7 +19,8 @@ public class Rogue06 : Enemy, IDamageable
             return;
         }
 
-        movement();
+        if (isDead == false)
+            movement();
     }
 
     void movement()
@@ -92,7 +94,8 @@ public class Rogue06 : Enemy, IDamageable
         anim.SetTrigger("Hit");
         if (Health < 1)
         {
-            Destroy(this.gameObject);
+            isDead = true;
+            anim.SetTrigger("Death");
         }
     }
 }
