@@ -12,8 +12,11 @@ public class Coin : MonoBehaviour
     {
         if (other.tag == "Player")
         {
-            gameManager.AddCoin();
-            coin.SetActive(false);
+            if (gameManager.isGameActive())
+            {
+                gameManager.AddCoin();
+                coin.SetActive(false);
+            }
         }
     }
 }

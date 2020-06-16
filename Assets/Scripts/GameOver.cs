@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class GameOver : MonoBehaviour
 {
+    public string currentSceene;
     public GameObject gameOverUI;
     public GameManager gameManager;
 
@@ -24,6 +25,6 @@ public class GameOver : MonoBehaviour
 
     public void RestartButton()
     {
-        SceneManager.LoadScene("SampleScene2");
+        SceneManager.LoadScene(currentSceene);
     }
 }

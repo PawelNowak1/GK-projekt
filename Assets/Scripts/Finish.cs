@@ -5,15 +5,24 @@ using UnityEngine.SceneManagement;
 
 public class Finish : MonoBehaviour
 {
-    public GameObject finishUI;
+    public GameObject successfinishUI;
+    public GameObject failfinishUI;
     public GameManager gameManager;
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         if(other.tag == "Player")
         {
-            gameManager.FinishMap();
-            finishUI.SetActive(true);
+            if(gameManager.GetCoins() < 10)
+            {
+                gameManager.FinishMap();
+                failfinishUI.SetActive(true);
+            }
+            else
+            {
+                gameManager.FinishMap();
+                successfinishUI.SetActive(true);
+            }
         }
     }
 }

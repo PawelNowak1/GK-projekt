@@ -8,9 +8,11 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI timerText;
     public TextMeshProUGUI coinText;
     public TextMeshProUGUI endTimerText;
+    public TextMeshProUGUI endCoinText;
 
     private int coinCounter;
     private float startTime;
+    private float currentTime;
     private bool isActive;
 
     void Start ()
@@ -20,10 +22,21 @@ public class GameManager : MonoBehaviour
         isActive = true;
     }
 
+    public bool isGameActive()
+    {
+        return isActive;
+    }
+
+    public int GetCoins()
+    {
+        return coinCounter;
+    }
+
     void Update()
     {
         if(isActive){
-            float t = Time.time - startTime;
+            currentTime = Time.time;
+            float t = currentTime - startTime;
 
             string minutes = ((int)t / 60).ToString();
             string seconds = (t % 60).ToString("f0");
@@ -42,14 +55,18 @@ public class GameManager : MonoBehaviour
 
     public void AddCoin()
     {
-        coinCounter += 1;
-        coinText.text = coinCounter.ToString();
+        if (isActive)
+        {
+            coinCounter += 1;
+            coinText.text = coinCounter.ToString();
+        }
     }
 
     public void FinishMap()
     {
+        endCoinText.text = coinCounter.ToString();
         isActive = false;
-        float t = Time.time - startTime;
+        float t = currentTime;
 
         string minutes = ((int)t / 60).ToString();
         string seconds = (t % 60).ToString("f0");
