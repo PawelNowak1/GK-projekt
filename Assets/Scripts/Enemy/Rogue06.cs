@@ -87,15 +87,21 @@ public class Rogue06 : Enemy, IDamageable
 
     public void Damage()
     {
-        isHit = true;
-        anim.SetBool("InCombat", true);
-        Debug.Log("Damage");
+      
         Health--;
-        anim.SetTrigger("Hit");
-        if (Health < 1)
+        if (Health == 0)
         {
             isDead = true;
             anim.SetTrigger("Death");
+        } else if(Health < 1)
+        {
+            isDead = true;
+        } else
+        {
+            isHit = true;
+            anim.SetBool("InCombat", true);
+            Debug.Log("Damage");
+            anim.SetTrigger("Hit");
         }
     }
 }
