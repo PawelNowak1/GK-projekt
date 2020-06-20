@@ -7,18 +7,22 @@ public class Attack : MonoBehaviour
     private bool canDamage = true;
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("HIT: " + other.name);
-        IDamageable hit = other.GetComponent<IDamageable>();
-
-        if (hit != null)
+        if (other.name != "Ground_Tilemap")
         {
-            if (canDamage == true)
+            Debug.Log("HIT: " + other.name);
+            IDamageable hit = other.GetComponent<IDamageable>();
+
+            if (hit != null)
             {
-                hit.Damage();
-                canDamage = false;
-                StartCoroutine(ResetDamage());
+                if (canDamage == true)
+                {
+                    hit.Damage();
+                    canDamage = false;
+                    StartCoroutine(ResetDamage());
+                }
             }
         }
+       
     }
 
     IEnumerator ResetDamage()

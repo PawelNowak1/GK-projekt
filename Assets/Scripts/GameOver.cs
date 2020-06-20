@@ -13,8 +13,7 @@ public class GameOver : MonoBehaviour
     {
         if (other.tag == "Player")
         {
-            gameManager.FinishMap();
-            gameOverUI.SetActive(true);
+            gameManager.GameOver();
         }
     }
 
