@@ -55,10 +55,15 @@ public class Rogue06 : Enemy, IDamageable
         }
 
         float distance = Vector3.Distance(transform.localPosition, player.transform.localPosition);
-        if (distance > 2.0f)
+        if (distance > 3.0f)
         {
             isHit = false;
             anim.SetBool("InCombat", false);
+        } else
+        {
+            isHit = true;
+            anim.SetTrigger("Idle");
+            anim.SetBool("InCombat", true);
         }
 
         Vector3 direction = player.transform.localPosition - transform.localPosition;
