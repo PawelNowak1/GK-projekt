@@ -102,6 +102,7 @@ public class Player : MonoBehaviour, IDamageable
 
             if(HealthScore == 0)
             {
+                playerAnim.Death();
                 gameManager.GameOver();
             }
         }
